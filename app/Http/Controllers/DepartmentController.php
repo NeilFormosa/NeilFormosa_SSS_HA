@@ -25,10 +25,12 @@ class DepartmentController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'description' => 'required|string',
         ]);
 
         Department::create([
             'name' => $request->name,
+            'description' => $request->description
         ]);
 
         return redirect()->route('departments.index')
@@ -46,10 +48,12 @@ class DepartmentController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'description' => 'required|string',
         ]);
 
         $department->update([
             'name' => $request->name,
+            'description' => $request->description,
         ]);
 
         return redirect()->route('departments.index')
