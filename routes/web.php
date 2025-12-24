@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\AttendeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Redirect homepage to Departments index
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('departments.index');
 });
+
+// Department CRUD
+Route::resource('departments', DepartmentController::class);
+
+// Event CRUD
+Route::resource('events', EventController::class);
+
+// Attendee CRUD
+Route::resource('attendees', AttendeeController::class);
+
+
