@@ -8,70 +8,88 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    //Display all events
+    // Display all events
     public function index()
     {
         $events = Event::with('department')->get();
         return view('events.index', compact('events'));
     }
 
-    //Show form to create a new event
+    // Show form to create a new event
     public function create()
     {
         $departments = Department::all();
         return view('events.create', compact('departments'));
     }
 
-    //Store a new event
+    // Store a new event
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
             'department_id' => 'required|exists:departments,id',
             'date' => 'required|date',
+            'location' => 'required|string|max:255',
+            'organizer_name' => 'required|string|max:255',
         ]);
 
         Event::create([
-            'name' => $request->name,
+            'title' => $request->title,
+            'description' => $request->description,
             'department_id' => $request->department_id,
             'date' => $request->date,
+            'location' => $request->location,
+            'organizer_name' => $request->organizer_name,
         ]);
 
         return redirect()->route('events.index')
                          ->with('success', 'Event created successfully');
     }
 
-    //Show form to edit an event
+    // Show form to edit an event
     public function edit(Event $event)
     {
         $departments = Department::all();
         return view('events.edit', compact('event', 'departments'));
     }
 
-    //Update an event
+    // Update an event
     public function update(Request $request, Event $event)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
             'department_id' => 'required|exists:departments,id',
             'date' => 'required|date',
+            'location' => 'required|string|max:255',
+            'organizer_name' => 'required|string|max:255',
         ]);
 
         $event->update([
-            'name' => $request->name,
+            'title' => $request->title,
+            'description' => $request->description,
             'department_id' => $request->department_id,
             'date' => $request->date,
+            'location' => $request->location,
+            'organizer_name' => $request->organizer_name,
         ]);
 
         return redirect()->route('events.index')
                          ->with('success', 'Event updated successfully');
     }
 
-    //Delete an event
+    // Delete an event
     public function destroy(Event $event)
     {
         $event->delete();
         return redirect()->route('events.index')
                          ->with('success', 'Event deleted successfully');
+    }
+
+    // Show a single event
+    public function show(Event $event)
+    {
+        return view('events.show', compact('event'));
     }
 }
