@@ -31,4 +31,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'abstract_email' => [
+        'key' => env('ABSTRACT_EMAIL_API_KEY'),
+    ],
+
+
 ];
