@@ -9,11 +9,24 @@ use Illuminate\Http\Request;
 class EventController extends Controller
 {
     // Display all events
-    public function index()
+    public function index(Request $request)
     {
-        $events = Event::with('department')->get();
+        $query = Event::query()->with('department');
+
+        // Apply sorting if requested
+        if ($request->get('sort') === 'department') {
+            $query->join('departments', 'events.department_id', '=', 'departments.id')
+                ->orderBy('departments.name', 'asc')
+                ->select('events.*');
+        } else {
+            $query->latest(); // default sorting
+        }
+
+        $events = $query->get();
+
         return view('events.index', compact('events'));
     }
+
 
     // Show form to create a new event
     public function create()

@@ -11,9 +11,19 @@ use Illuminate\Support\Facades\Http;
 class AttendeeController extends Controller
 {
     // Display all attendees
-    public function index()
+    public function index(Request $request)
     {
-        $attendees = Attendee::with('event')->get();
+        $query = Attendee::query()->with('event');
+
+        // Apply sorting if requested
+        if ($request->get('sort') === 'name') {
+            $query->orderBy('name', 'asc');
+        } else {
+            $query->latest(); // default sorting
+        }
+
+        $attendees = $query->get();
+
         return view('attendees.index', compact('attendees'));
     }
 

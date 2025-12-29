@@ -10,6 +10,17 @@
     Create Event
 </a>
 
+<div class="mb-3">
+    <a href="{{ route('events.index') }}" class="btn btn-secondary">
+        Default Order
+    </a>
+
+    <a href="{{ route('events.index', ['sort' => 'department']) }}" class="btn btn-warning">
+        Sort by Department
+    </a>
+</div>
+
+
 <table class="table table-bordered">
     <thead class="table-warning">
         <tr>

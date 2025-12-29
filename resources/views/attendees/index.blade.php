@@ -13,6 +13,16 @@
     <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 
+<div class="mb-3">
+    <a href="{{ route('attendees.index', ['sort' => 'name']) }}" class="btn btn-warning">
+        Sort by Name
+    </a>
+
+    <a href="{{ route('attendees.index') }}" class="btn btn-secondary">
+        Reset
+    </a>
+</div>
+
 <table class="table table-bordered">
     <thead class="table-warning">
         <tr>
